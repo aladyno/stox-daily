@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uptrend Scan Dashboard - VN Equity</title>
+<style>
+    :root {
+        --bg-color: #f4f6f8;
+        --container-bg: #ffffff;
+        --text-main: #212529;
+        --text-muted: #6c757d;
+        --border-color: #dee2e6;
+        --danger-color: #dc3545;
+        --warning-color: #ffc107;
+        --success-color: #198754;
+        --active-bg: #e8f0fe;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        line-height: 1.5;
+        padding: 20px;
+        -webkit-font-smoothing: antialiased;
+    }
+    .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        background: var(--container-bg);
+        padding: 24px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .header {
+        border-bottom: 2px solid var(--text-main);
+        padding-bottom: 12px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+    .header h1 { font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+    .header .date { font-size: 14px; color: var(--text-muted); font-weight: 500; }
+    .summary-widgets {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+    .widget { border: 1px solid var(--border-color); padding: 14px; border-radius: 6px; background: #fff; }
+    .widget-title { font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; letter-spacing: 0.2px; }
+    .widget-value { font-size: 18px; font-weight: 700; }
+    .text-danger { color: var(--danger-color); }
+    .text-warning { color: #b58900; }
+    .text-success { color: var(--success-color); }
+    .grid-layout {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 32px;
+        margin-bottom: 8px;
+    }
+    section { margin-bottom: 24px; }
+    h2 { font-size: 14px; text-transform: uppercase; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; margin-bottom: 12px; font-weight: 700; color: #343a40; }
+    .info-list { list-style: none; }
+    .info-list li { font-size: 14px; margin-bottom: 10px; position: relative; padding-left: 14px; }
+    .info-list li::before { content: "•"; position: absolute; left: 0; color: var(--text-muted); font-weight: bold; }
+    .info-list li strong { font-weight: 600; color: #000; }
+    .sub-list { list-style: none; margin-left: 16px; margin-top: 6px; }
+    .sub-list li { font-size: 13.5px; color: #495057; margin-bottom: 6px; }
+    .sub-list li::before { content: "—"; font-weight: normal; }
+    .alert-box {
+        font-size: 13.5px;
+        background: #fff3cd;
+        padding: 14px;
+        border-radius: 6px;
+        border-left: 4px solid var(--warning-color);
+        color: #664d03;
+        line-height: 1.6;
+    }
+    .badge {
+        display: inline-block;
+        padding: 3px 6px;
+        font-size: 11px;
+        font-weight: 700;
+        border-radius: 4px;
+        text-transform: uppercase;
+    }
+    .badge-danger { background-color: #f8d7da; color: var(--danger-color); }
+    .badge-success { background-color: #d1e7dd; color: var(--success-color); }
+    .source-footer {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-top: 24px;
+        text-align: center;
+        border-top: 1px dashed var(--border-color);
+        padding-top: 12px;
+    }
+    @media (max-width: 768px) {
+        body { padding: 10px; }
+        .container { padding: 16px; }
+        .header { flex-direction: column; align-items: flex-start; gap: 4px; padding-bottom: 10px; }
+        .header h1 { font-size: 17px; }
+        .summary-widgets { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .widget { padding: 10px; }
+        .widget-title { font-size: 10px; }
+        .widget-value { font-size: 15px !important; }
+        .grid-layout { grid-template-columns: 1fr; gap: 24px; }
+        h2 { font-size: 13px; }
+        .info-list li { font-size: 13.5px; margin-bottom: 12px; }
+    }
+</style>
+</head>
+<body>
+<div class="container">
+
+	<!-- HEADER -->
+	<div class="header">
+		<div><h1 id="view-title">UPTREND SCAN · HOSE+HNX</h1></div>
+		<div class="date" id="view-date">Báo cáo ngày: 2026-06-05 · cửa sổ 2 tuần · đọc &lt; 10 phút</div>
+	</div>
+
+	<!-- KHỐI TRẠNG THÁI NHANH -->
+	<div class="summary-widgets">
+		<div class="widget" id="widget-regime" style="border-left: 4px solid #ffc107;">
+			<div class="widget-title">Market Regime</div>
+			<div class="widget-value text-warning" id="view-regime">TRUNG TÍNH</div>
+		</div>
+		<div class="widget" id="widget-passed" style="border-left: 4px solid var(--danger-color);">
+			<div class="widget-title">Kết quả Quét</div>
+			<div class="widget-value text-danger" id="view-passed">0 MÃ ĐẠT CHUẨN</div>
+		</div>
+		<div class="widget" style="border-left: 4px solid #ced4da;">
+			<div class="widget-title">Tỷ trọng đề xuất</div>
+			<div class="widget-value" id="view-allocation" style="font-size: 15px;">40–50% (Quan sát)</div>
+		</div>
+		<div class="widget" style="border-left: 4px solid #ced4da;">
+			<div class="widget-title">Độ rộng (Trên MA20)</div>
+			<div class="widget-value" id="view-breadth" style="font-size: 15px;">~46% HOSE (140/304)</div>
+		</div>
+	</div>
+
+	<!-- CHI TIẾT NỘI DUNG -->
+	<div class="grid-layout">
+		<!-- CỘT TRÁI -->
+		<div>
+			<section>
+				<h2>Bối cảnh Thị trường (Market Action)</h2>
+				<ul class="info-list" id="view-market-action">
+					<li><strong>VN-Index:</strong> 1.831,55 điểm (+12,54 đt, +0,69%) phiên 04/06 — hồi phục trên ngưỡng MA20 ~1.810 nhưng chưa vượt kháng cự 1.838–1.843
+						<ul class="sub-list">
+							<li>Hỗ trợ quan sát: 1.800 và 1.745–1.760. Kháng cự gần: 1.838–1.843, xa hơn 1.860–1.910</li>
+							<li>HNX-Index: 304,86 (−12,62 đt, −3,98%) — phá chuỗi 18 phiên tăng do KSF và THD lao dốc mạnh</li>
+						</ul>
+					</li>
+					<li><strong>Thanh khoản:</strong> HOSE ~22.116 tỷ đồng/phiên (601 triệu CP) — dưới TB 20 phiên; tín hiệu phục hồi chưa thuyết phục
+						<ul class="sub-list">
+							<li>HNX TB tháng 6: ~1.299 tỷ/phiên (giảm 7,2% so tháng 5)</li>
+							<li>Thanh khoản xuống thấp nhất 12 tháng trong đầu tháng 6</li>
+						</ul>
+					</li>
+					<li><strong>Khối ngoại / Tự doanh:</strong> Khối ngoại bán ròng liên tiếp 10+ phiên; phiên 04/06 bán ròng ~5.740 tỷ (phần lớn là thỏa thuận khối VIC ~4.868 tỷ). Tự doanh bán ròng ~372 tỷ phiên 04/06
+						<ul class="sub-list">
+							<li>Ngoại lệ: FPT được mua ròng mạnh 257–566 tỷ/phiên liên tục 01–05/06</li>
+							<li>Khối ngoại tháng 5 rút ròng ~19.000–20.000 tỷ toàn HOSE</li>
+						</ul>
+					</li>
+					<li><strong>Nhóm ngành / Breadth:</strong> 9/18 nhóm ngành tăng phiên 04/06. Dẫn dắt: dầu khí (PLX tăng trần, BSR +3,77%), ngân hàng (STB +6,51%, CIB +2,2%), bất động sản (VIC, VHM hỗ trợ index)
+						<ul class="sub-list">
+							<li>HOSE breadth: 140 mã tăng / 164 mã giảm → 46% gainers, chưa mạnh</li>
+							<li>Động lực tăng VN-Index tập trung ở vài bluechip lớn, không lan tỏa rộng</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Danh sách Theo dõi (Chưa phải lệnh mua)</h2>
+				<ul class="info-list" id="view-watchlist">
+					<li><strong>Không có mã đạt chuẩn ≥5/8 với R:R ≥ 2:1 — không vào lệnh mới.</strong>
+						<ul class="sub-list">
+							<li>Regime Trung Tính + thanh khoản dưới TB + khối ngoại bán ròng cấu trúc → siết tiêu chí, ưu tiên bảo toàn vốn</li>
+							<li>FPT đạt 6/8 tiêu chí kỹ thuật nhưng R:R chỉ ~1.4:1 (entry 75K, stop 70K, target 82K) — dưới ngưỡng 2:1 bắt buộc. MA200 đang dốc xuống (giá 74.700 so đỉnh 52w 112.800). Chưa phải Stage-2</li>
+							<li>STB có breakout phiên 04/06 nhưng khối ngoại bán ròng STB, R:R ~1.4:1, đỉnh 52w đã ở 76.800 — setup rủi ro cao</li>
+							<li>Xem phần "Đã Loại" bên phải để biết chi tiết từng mã</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+		</div>
+		<!-- CỘT PHẢI -->
+		<div>
+			<section>
+				<h2>Nguyên tắc Hành động</h2>
+				<div class="alert-box" id="view-principle">
+					Regime Trung Tính: giữ 40–50% tiền mặt, chỉ vào lệnh khi có mã ≥5/8 VÀ R:R ≥ 2:1 rõ ràng. Không đuổi giá đã rời nền &gt;5–7%. Chờ VN-Index vượt và giữ được trên 1.843 với thanh khoản mở rộng trước khi tăng tỷ trọng. Đặt stoploss tuyệt đối trước khi vào lệnh — không thương lượng với rủi ro.
+				</div>
+			</section>
+			<section>
+				<h2>Danh sách Đã Loại (Tránh FOMO)</h2>
+				<ul class="info-list" id="view-eliminated">
+					<li><strong>FPT</strong> <span class="badge badge-danger">LOẠI</span> — R:R chỉ ~1.4:1, MA200 dốc xuống (giá -34% từ đỉnh 52w), chưa Stage-2</li>
+					<li><strong>STB</strong> <span class="badge badge-danger">LOẠI</span> — khối ngoại bán ròng, đã tăng 71% trong 52w, R:R ~1.4:1, đỉnh 76.800 vẫn là kháng cự mạnh</li>
+					<li><strong>PLX</strong> <span class="badge badge-danger">LOẠI</span> — tăng trần do tin bán cổ phiếu quỹ (không phải cấu trúc uptrend), nền &lt;3 tuần, lợi nhuận âm</li>
+					<li><strong>HPG</strong> <span class="badge badge-danger">LOẠI</span> — sideways, không có breakout nền; volume mạnh nhất (25/06/02) lại là ngày giá giảm (dấu hiệu distribution)</li>
+					<li><strong>GMD</strong> <span class="badge badge-danger">LOẠI</span> — thanh khoản mỏng (~415K–1.8M CP/phiên), nền chỉ 3 phiên (không đủ ≥3 tuần), chưa verify MA20/MA50</li>
+					<li><strong>MBB</strong> <span class="badge badge-danger">LOẠI</span> — YTD chỉ +1,19% (RS âm vs thị trường), sideways 5 phiên không có breakout, tín hiệu MA dài hạn là bán</li>
+					<li><strong>THD</strong> <span class="badge badge-danger">LOẠI</span> — tăng 12 phiên trần liên tiếp, đã "tăng nóng" &gt;30–40%, volume cạn dần, rủi ro đảo chiều cao</li>
+					<li><strong>AAN</strong> <span class="badge badge-danger">LOẠI</span> — cổ phiếu mới niêm yết, tăng +58% trong 1 tuần đầu, dấu hiệu bơm-xả, thanh khoản không ổn định</li>
+				</ul>
+			</section>
+		</div>
+	</div>
+
+	<!-- FOOTER -->
+	<div class="source-footer">
+		Nguồn tham chiếu: vietstock.vn, cafef.vn, 24hmoney.vn, simplize.vn, vneconomy.vn, tinnhanhchungkhoan.vn, nguoiquansat.vn, baomoi.com<br>
+		Quét: 18 candidate / Verify: 8 / Đạt tiêu chí ≥5/8: 1 (FPT) / Đạt R:R ≥2:1: 0<br>
+		Báo cáo tự động — không phải khuyến nghị đầu tư. Set Entry/Stop/TP theo bảng giá live.
+	</div>
+
+</div>
+</body>
+</html>
