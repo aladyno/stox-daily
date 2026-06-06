@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stox Daily — Uptrend Scan Reports</title>
+<meta name="description" content="Báo cáo quét uptrend hằng ngày HOSE + HNX — VN Equity">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+
+	<!-- HEADER -->
+	<div class="header">
+		<div>
+			<h1>STOX DAILY · UPTREND SCAN</h1>
+			<div class="subtitle">HOSE + HNX · Báo cáo quét tự động hằng ngày</div>
+		</div>
+		<div class="date" id="last-updated"></div>
+	</div>
+
+	<!-- BẢNG DANH SÁCH BÁO CÁO -->
+	<section>
+		<h2>Danh sách báo cáo</h2>
+		<div class="table-wrap">
+			<table id="report-table">
+				<thead>
+					<tr>
+						<th>Ngày</th>
+						<th>Market Regime</th>
+						<th>Kết quả quét</th>
+						<th>Tỷ trọng đề xuất</th>
+						<th>Độ rộng (MA20)</th>
+					</tr>
+				</thead>
+				<tbody id="report-tbody">
+					<tr><td colspan="5" class="loading">Đang tải danh sách báo cáo…</td></tr>
+				</tbody>
+			</table>
+		</div>
+	</section>
+
+	<!-- VIEWER: bấm row sẽ load báo cáo vào đây -->
+	<section id="viewer-section" hidden>
+		<div class="viewer-header">
+			<h2 id="viewer-title">Báo cáo</h2>
+			<div class="viewer-actions">
+				<a id="viewer-open-tab" href="#" target="_blank" rel="noopener">Mở tab mới ↗</a>
+				<button id="viewer-close" type="button">✕ Đóng</button>
+			</div>
+		</div>
+		<iframe id="viewer-frame" title="Báo cáo uptrend scan"></iframe>
+	</section>
+
+	<!-- FOOTER -->
+	<div class="source-footer">
+		⚠️ Báo cáo tự động — không phải khuyến nghị đầu tư.<br>
+		Nguồn: <a href="https://github.com/aladyno/stox-daily" target="_blank" rel="noopener">github.com/aladyno/stox-daily</a>
+	</div>
+
+</div>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="vi">
+	<head>
+		<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+				<title>Uptrend Scan Dashboard - VN Equity</title>
+				<style>
+        :root {
+            --bg-color: #f4f6f8;
+            --container-bg: #ffffff;
+            --text-main: #212529;
+            --text-muted: #6c757d;
+            --border-color: #dee2e6;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --success-color: #198754;
+            --link-color: #0d6efd;
+            --active-bg: #e8f0fe;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: var(--container-bg);
+            padding: 24px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        /* Header */
+        .header {
+            border-bottom: 2px solid var(--text-main);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .header h1 { font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .header .date { font-size: 14px; color: var(--text-muted); font-weight: 500; }
+
+        /* Khối trạng thái thị trường nhanh */
+        .summary-widgets {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .widget {
+            border: 1px solid var(--border-color);
+            padding: 14px;
+            border-radius: 6px;
+            background: #fff;
+        }
+        .widget-title { font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; letter-spacing: 0.2px;}
+        .widget-value { font-size: 18px; font-weight: 700; }
+        .text-danger { color: var(--danger-color); }
+
+        /* Bố cục chính chi tiết */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        section { margin-bottom: 24px; }
+        h2 { font-size: 14px; text-transform: uppercase; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; margin-bottom: 12px; font-weight: 700; color: #343a40;}
+
+        /* List hiển thị thông tin */
+        .info-list { list-style: none; }
+        .info-list li { font-size: 14px; margin-bottom: 10px; position: relative; padding-left: 14px; }
+        .info-list li::before { content: "•"; position: absolute; left: 0; color: var(--text-muted); font-weight: bold;}
+        .info-list li strong { font-weight: 600; color: #000; }
+
+        .sub-list { list-style: none; margin-left: 16px; margin-top: 6px; }
+        .sub-list li { font-size: 13.5px; color: #495057; margin-bottom: 6px;}
+        .sub-list li::before { content: "—"; font-weight: normal; }
+
+        /* Principle Alert */
+        .alert-box {
+            font-size: 13.5px;
+            background: #fff3cd;
+            padding: 14px;
+            border-radius: 6px;
+            border-left: 4px solid var(--warning-color);
+            color: #664d03;
+            line-height: 1.6;
+        }
+
+        /* Badge định dạng */
+        .badge {
+            display: inline-block;
+            padding: 3px 6px;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+        .badge-danger { background-color: #f8d7da; color: var(--danger-color); }
+        .badge-dark { background-color: #e2e3e5; color: #383d41; }
+        .badge-success { background-color: #d1e7dd; color: var(--success-color); }
+
+        /* Khu vực Lưu trữ / Bảng dữ liệu */
+        .archive-section {
+            border-top: 2px solid var(--border-color);
+            padding-top: 24px;
+        }
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-top: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+        }
+        .archive-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            min-width: 600px; /* Force scroll trên mobile nếu nhỏ hơn */
+        }
+        .archive-table th, .archive-table td {
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+            vertical-align: middle;
+        }
+        .archive-table th { background-color: #f8f9fa; font-weight: 600; color: #495057; white-space: nowrap;}
+        .archive-table td.nowrap { white-space: nowrap; }
+        .archive-table tbody tr { cursor: pointer; transition: background-color 0.2s; }
+        .archive-table tbody tr:hover { background-color: #f1f3f5; }
+        .archive-table tbody tr.active { background-color: var(--active-bg); }
+        .archive-table tbody tr:last-child td { border-bottom: none; }
+
+        /* Phân trang */
+        .pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+        }
+        .page-info { font-size: 12px; color: var(--text-muted); }
+        .pagination {
+            display: flex;
+            gap: 4px;
+        }
+        .page-btn {
+            padding: 6px 12px;
+            border: 1px solid var(--border-color);
+            background: #fff;
+            font-size: 13px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        .page-btn.active {
+            background-color: var(--text-main);
+            color: #fff;
+            border-color: var(--text-main);
+        }
+        .page-btn:disabled { color: #adb5bd; cursor:not-allowed; background: #f8f9fa;}
+
+        .source-footer {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 24px;
+            text-align: center;
+            border-top: 1px dashed var(--border-color);
+            padding-top: 12px;
+        }
+
+        /* ========================================= */
+        /* CSS CHO MOBILE (iPhone 13 Mini & tương đương) */
+        /* ========================================= */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 16px; }
+
+            /* Header stack */
+            .header { flex-direction: column; align-items: flex-start; gap: 4px; padding-bottom: 10px;}
+            .header h1 { font-size: 17px; }
+
+            /* Widget lưới 2x2 cho màn hình nhỏ */
+            .summary-widgets { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .widget { padding: 10px; }
+            .widget-title { font-size: 10px; }
+            .widget-value { font-size: 15px !important; } /* Ghi đè inline style */
+
+            /* Layout cột thành 1 dọc */
+            .grid-layout { grid-template-columns: 1fr; gap: 24px; }
+
+            h2 { font-size: 13px; }
+            .info-list li { font-size: 13.5px; margin-bottom: 12px;}
+
+            /* Table responsive padding */
+            .archive-table th, .archive-table td { padding: 10px 8px; }
+
+            /* Pagination mobile */
+            .pagination-container { flex-direction: column; gap: 12px; align-items: stretch; }
+            .page-info { text-align: center; }
+            .pagination { justify-content: center; }
+        }
+    </style>
+			</head>
+			<body>
+				<div class="container">
+					<!-- HEADER -->
+					<div class="header">
+						<div>
+							<h1 id="view-title">UPTREND SCAN · HOSE+HNX</h1>
+						</div>
+						<div class="date" id="view-date">Báo cáo ngày: 2026-06-04</div>
+					</div>
+					<!-- KHỐI TRẠNG THÁI NHANH -->
+					<div class="summary-widgets">
+						<div class="widget" id="widget-regime" style="border-left: 4px solid var(--danger-color);">
+							<div class="widget-title">Market Regime</div>
+							<div class="widget-value text-danger" id="view-regime">RISK-OFF</div>
+						</div>
+						<div class="widget" id="widget-passed" style="border-left: 4px solid var(--danger-color);">
+							<div class="widget-title">Kết quả Quét</div>
+							<div class="widget-value text-danger" id="view-passed">0 MÃ ĐẠT CHUẨN</div>
+						</div>
+						<div class="widget" style="border-left: 4px solid #ced4da;">
+							<div class="widget-title">Tỷ trọng đề xuất</div>
+							<div class="widget-value" id="view-allocation" style="font-size: 15px;">Phòng thủ · ≤20–30% cổ phiếu (giữ ≥50–70% tiền mặt)</div>
+						</div>
+						<div class="widget" style="border-left: 4px solid #ced4da;">
+							<div class="widget-title">Độ rộng (Trên MA20)</div>
+							<div class="widget-value" id="view-breadth" style="font-size: 15px;">N/A — cần xác minh</div>
+						</div>
+					</div>
+					<!-- CHI TIẾT NỘI DUNG -->
+					<div id="detail-content-area">
+						<div class="grid-layout">
+							<!-- CỘT TRÁI -->
+							<div>
+								<section>
+									<h2>Bối cảnh Thị trường (Market Action)</h2>
+									<ul class="info-list" id="view-market-action">
+										<li><strong>VN-Index:</strong> điều chỉnh ~1.863,49 điểm (tuần 31/5–5/6), −0,73%/tuần; phiên đầu tháng 6 mất gần 19 điểm, chuỗi 6 phiên giảm về vùng ~1.820. Đỉnh lịch sử gần nhất 1.933,11 điểm.
+											<ul class="sub-list">
+												<li>Giá dưới MA5 &amp; MA20 (quán tính giảm), nhưng vẫn trên MA50/MA100/MA200 — trung-dài hạn chưa gãy. Hỗ trợ 1.840–1.860; kháng cự 1.880–1.900.</li>
+											</ul>
+										</li>
+										<li><strong>Thanh khoản:</strong> GTGD khớp lệnh HOSE ~19.582 tỷ đồng/tuần — về vùng thấp nhất hơn 1 năm. Dòng tiền co lại, thận trọng.</li>
+										<li><strong>Khối ngoại / Tự doanh:</strong> bán ròng mạnh. Tháng 5 bán ròng ~19.343 tỷ (+38% so tháng 4); lũy kế YTD ~ −62.362 tỷ. Phiên 3/6 bán ròng ~564 tỷ toàn thị trường (xả HPG, HDB, ACB, CTG, VPB). Tự doanh phiên 4/6 cũng bán ròng.
+											<ul class="sub-list">
+												<li>Điểm sáng cục bộ: FPT (+481 tỷ phiên 2/6), VCB (~+1,1 nghìn tỷ) — nhưng không đủ bù dòng xả nhóm trụ.</li>
+											</ul>
+										</li>
+										<li><strong>Nhóm ngành / Breadth:</strong> nghiêng tiêu cực — 9/18 ngành giảm (Truyền thông giảm mạnh nhất); Dầu khí &amp; Tiện ích trụ tốt; Công nghệ hút tiền cục bộ. HNX-Index ngược dòng (+~18% tháng 5, lên 294,94) nhờ khối ngoại mua ròng 4 tháng liên tiếp.</li>
+										<li><strong>Khuyến nghị môi giới:</strong> giữ tối thiểu 50% tiền mặt (TVS), ưu tiên quản trị rủi ro, không "bắt dao rơi", chỉ giải ngân tại nền tích lũy vững — không mua đuổi.</li>
+									</ul>
+								</section>
+								<section>
+									<h2>Danh sách Theo dõi (Chưa phải lệnh mua)</h2>
+									<ul class="info-list" id="view-watchlist">
+										<li><strong>Không có mã đạt chuẩn ≥5/8 — không vào lệnh mới.</strong>
+											<ul class="sub-list">
+												<li>Các ứng viên ngược dòng (IDC, PVS, CEO trên HNX; FPT trên HOSE) đều KHÔNG thỏa điều kiện khởi phát uptrend mạnh: tăng chậm/đang tích lũy hoặc suy yếu, thiếu phiên breakout volume ≥1,5–2× TB20, và không xác minh được điểm pivot + MA20/MA50 bằng số thực có nguồn.</li>
+												<li>Regime Risk-Off (VN-Index dưới MA20, thanh khoản đáy 1 năm, khối ngoại xả ròng kỷ lục) → giữ tiền mặt là vị thế đúng. Thà 0 mã còn hơn flag mã không bound được rủi ro với R:R≥2:1.</li>
+											</ul>
+										</li>
+									</ul>
+								</section>
+							</div>
+							<!-- CỘT PHẢI -->
+							<div>
+								<section>
+									<h2>Nguyên tắc Hành động</h2>
+									<div class="alert-box" id="view-principle">
+										Regime RISK-OFF: bảo toàn vốn là ưu tiên số 1. Giữ ≥50–70% tiền mặt, tỷ trọng cổ phiếu ≤20–30% và chỉ với mã đã có nền + R:R≥2:1 rõ ràng. Không mua đuổi, không bắt đáy theo tin đồn, không FOMO mã tăng nóng. Chờ VN-Index lấy lại MA20 kèm thanh khoản cải thiện và khối ngoại ngừng bán ròng mới nâng dần tỷ trọng. Khi không có setup chuẩn, đứng ngoài cũng là một quyết định.
+									</div>
+								</section>
+								<section>
+									<h2>Danh sách Đã Loại (Tránh FOMO)</h2>
+									<ul class="info-list" id="view-eliminated">
+										<li><strong>FPT</strong> <span class="badge badge-danger">LOẠI</span> — tín hiệu "Strong Sell", giá ~76.400đ giảm sâu từ đỉnh 105.000đ (19/1), dưới MA; khối ngoại tổng thể bán ròng. Cấu trúc giảm, không phải uptrend.</li>
+										<li><strong>IDC</strong> <span class="badge badge-danger">LOẠI</span> — chỉ +2,90%/1 tháng, volume phiên gần nhất (~616k) thấp hơn TB10 (~1.068k): tích lũy chậm, không có phiên breakout volume.</li>
+										<li><strong>PVS</strong> <span class="badge badge-danger">LOẠI</span> — +3,47%/1 tháng, volume phiên (~2.604k) ≈ TB10-20 (~2.491k): không có volume xác nhận breakout; bị bán ròng tháng 5; giá dầu Brent dự báo yếu (~63 USD).</li>
+										<li><strong>CEO</strong> <span class="badge badge-danger">LOẠI</span> — phiên gần nhất GIẢM −1,85%, volume (~4.129k) dưới TB10 (~7.003k): suy yếu, không breakout; P/E TTM ~44,9 (định giá cao).</li>
+									</ul>
+								</section>
+							</div>
+						</div>
+					</div>
+					<div class="source-footer">
+            Nguồn tham chiếu dữ liệu: vneconomy.vn, vietstock.vn, cafef.vn, simplize.vn, baomoi.com (TTXVN/Thời báo Ngân hàng), finance.vietstock.vn. <br>
+            ⚠️ Báo cáo tự động — không phải khuyến nghị đầu tư. Một số chỉ báo kỹ thuật (MA20/MA50/MA200, % mã trên MA20, điểm pivot) không xác minh được số thực từ nguồn free real-time nên để N/A thay vì ước đoán.
+        </div>
+					</div>
+				</div>
+			</body>
+		</html>
