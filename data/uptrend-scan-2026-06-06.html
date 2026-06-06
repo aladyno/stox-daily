@@ -118,7 +118,7 @@
 	<!-- HEADER -->
 	<div class="header">
 		<div><h1 id="view-title">UPTREND SCAN · HOSE+HNX</h1></div>
-		<div class="date" id="view-date">Báo cáo ngày: 2026-06-05 · cửa sổ 2 tuần · đọc &lt; 10 phút</div>
+		<div class="date" id="view-date">Báo cáo ngày: 2026-06-06</div>
 	</div>
 
 	<!-- KHỐI TRẠNG THÁI NHANH -->
@@ -127,17 +127,17 @@
 			<div class="widget-title">Market Regime</div>
 			<div class="widget-value text-warning" id="view-regime">TRUNG TÍNH</div>
 		</div>
-		<div class="widget" id="widget-passed" style="border-left: 4px solid var(--danger-color);">
+		<div class="widget" id="widget-passed" style="border-left: 4px solid #198754;">
 			<div class="widget-title">Kết quả Quét</div>
-			<div class="widget-value text-danger" id="view-passed">0 MÃ ĐẠT CHUẨN</div>
+			<div class="widget-value text-success" id="view-passed">3 MÃ ĐẠT CHUẨN</div>
 		</div>
 		<div class="widget" style="border-left: 4px solid #ced4da;">
 			<div class="widget-title">Tỷ trọng đề xuất</div>
-			<div class="widget-value" id="view-allocation" style="font-size: 15px;">40–50% (Quan sát)</div>
+			<div class="widget-value" id="view-allocation" style="font-size: 15px;">30–50% (Chọn lọc)</div>
 		</div>
 		<div class="widget" style="border-left: 4px solid #ced4da;">
 			<div class="widget-title">Độ rộng (Trên MA20)</div>
-			<div class="widget-value" id="view-breadth" style="font-size: 15px;">~46% HOSE (140/304)</div>
+			<div class="widget-value" id="view-breadth" style="font-size: 15px;">N/A — cần xác minh</div>
 		</div>
 	</div>
 
@@ -148,28 +148,25 @@
 			<section>
 				<h2>Bối cảnh Thị trường (Market Action)</h2>
 				<ul class="info-list" id="view-market-action">
-					<li><strong>VN-Index:</strong> 1.831,55 điểm (+12,54 đt, +0,69%) phiên 04/06 — hồi phục trên ngưỡng MA20 ~1.810 nhưng chưa vượt kháng cự 1.838–1.843
+					<li><strong>VN-Index:</strong> 1.838,9 điểm (−1,32% tuần 1–5/6/2026) — tuần giảm thứ 3 liên tiếp; ngày 5/6 hồi nhẹ +0,4% lên 1.839,9 điểm nhờ VIC, VHM, VJC.
 						<ul class="sub-list">
-							<li>Hỗ trợ quan sát: 1.800 và 1.745–1.760. Kháng cự gần: 1.838–1.843, xa hơn 1.860–1.910</li>
-							<li>HNX-Index: 304,86 (−12,62 đt, −3,98%) — phá chuỗi 18 phiên tăng do KSF và THD lao dốc mạnh</li>
+							<li>Vị thế vs MA: chưa xác minh chính xác MA20/50/200 VN-Index (thanh khoản sụt cho thấy chỉ số đang dưới áp lực)</li>
+							<li>Hỗ trợ gần: vùng 1.820; kháng cự: 1.870–1.890</li>
 						</ul>
 					</li>
-					<li><strong>Thanh khoản:</strong> HOSE ~22.116 tỷ đồng/phiên (601 triệu CP) — dưới TB 20 phiên; tín hiệu phục hồi chưa thuyết phục
+					<li><strong>Thanh khoản:</strong> ~15.674 tỷ đồng/phiên (HOSE), thấp hơn TB 20 phiên liên tục 11 phiên; giảm ~35% so với TB 20 tuần.
 						<ul class="sub-list">
-							<li>HNX TB tháng 6: ~1.299 tỷ/phiên (giảm 7,2% so tháng 5)</li>
-							<li>Thanh khoản xuống thấp nhất 12 tháng trong đầu tháng 6</li>
+							<li>Tín hiệu yếu: dòng tiền chưa xác nhận xu hướng, NVI (Negative Volume Index) cắt xuống EMA-20</li>
 						</ul>
 					</li>
-					<li><strong>Khối ngoại / Tự doanh:</strong> Khối ngoại bán ròng liên tiếp 10+ phiên; phiên 04/06 bán ròng ~5.740 tỷ (phần lớn là thỏa thuận khối VIC ~4.868 tỷ). Tự doanh bán ròng ~372 tỷ phiên 04/06
+					<li><strong>Khối ngoại / Tự doanh:</strong> Khối ngoại bán ròng 7.192 tỷ đồng toàn tuần (trong đó HOSE −7.300 tỷ); ngày 5/6 đảo chiều mua ròng nhẹ +364 tỷ (VIC +272 tỷ, ACB +255 tỷ, FPT +126 tỷ). Tự doanh HNX mua ròng tháng 5.
 						<ul class="sub-list">
-							<li>Ngoại lệ: FPT được mua ròng mạnh 257–566 tỷ/phiên liên tục 01–05/06</li>
-							<li>Khối ngoại tháng 5 rút ròng ~19.000–20.000 tỷ toàn HOSE</li>
+							<li>Xu hướng ngoại ngắn hạn: bán ròng áp đảo — đây là rủi ro hệ thống cần theo dõi</li>
 						</ul>
 					</li>
-					<li><strong>Nhóm ngành / Breadth:</strong> 9/18 nhóm ngành tăng phiên 04/06. Dẫn dắt: dầu khí (PLX tăng trần, BSR +3,77%), ngân hàng (STB +6,51%, CIB +2,2%), bất động sản (VIC, VHM hỗ trợ index)
+					<li><strong>Nhóm ngành / Breadth:</strong> BĐS (+1,86%) dẫn dắt duy nhất ngày 5/6; Dầu khí (GAS, BSR, PLX, PVD) RS cao 2 tuần; Chứng khoán (VND, SHS, MBS) bứt phá nhờ kỳ vọng MSCI. Công nghệ, Ngân hàng chịu áp lực.
 						<ul class="sub-list">
-							<li>HOSE breadth: 140 mã tăng / 164 mã giảm → 46% gainers, chưa mạnh</li>
-							<li>Động lực tăng VN-Index tập trung ở vài bluechip lớn, không lan tỏa rộng</li>
+							<li>Breadth xấu: 419 giảm vs 283 tăng (5/6); thị trường phân hóa mạnh</li>
 						</ul>
 					</li>
 				</ul>
@@ -177,12 +174,28 @@
 			<section>
 				<h2>Danh sách Theo dõi (Chưa phải lệnh mua)</h2>
 				<ul class="info-list" id="view-watchlist">
-					<li><strong>Không có mã đạt chuẩn ≥5/8 với R:R ≥ 2:1 — không vào lệnh mới.</strong>
+					<li><strong>1. VJC (HOSE) · 8/8</strong> <span class="badge badge-success">SETUP</span>
 						<ul class="sub-list">
-							<li>Regime Trung Tính + thanh khoản dưới TB + khối ngoại bán ròng cấu trúc → siết tiêu chí, ưu tiên bảo toàn vốn</li>
-							<li>FPT đạt 6/8 tiêu chí kỹ thuật nhưng R:R chỉ ~1.4:1 (entry 75K, stop 70K, target 82K) — dưới ngưỡng 2:1 bắt buộc. MA200 đang dốc xuống (giá 74.700 so đỉnh 52w 112.800). Chưa phải Stage-2</li>
-							<li>STB có breakout phiên 04/06 nhưng khối ngoại bán ròng STB, R:R ~1.4:1, đỉnh 52w đã ở 76.800 — setup rủi ro cao</li>
-							<li>Xem phần "Đã Loại" bên phải để biết chi tiết từng mã</li>
+							<li>Khởi phát: Tăng trần 6,95% ngày 5/6 lên 184.600 đ — pocket pivot mạnh từ nền tích lũy 169.200–175.000; volume 1,79 tr cp = 1,77× TB10 (1,01 tr); Q1/2026 lợi nhuận +60% YoY; cổ tức cổ phiếu 30%</li>
+							<li>RS: +7,39% (7 ngày) vs VN-Index −1,32% tuần — outperform rõ ràng; YTD +11,67%; 1 năm +102%</li>
+							<li>Entry 175.000–177.000 (retest breakout zone, đợi pullback) · Stop 168.500 (dưới đáy 52 tuần 169.200, −4,2%) · TP1 195.000 / TP2 207.000 · R:R 2,5:1 / 4,1:1</li>
+							<li>Smart money: volume tích lũy 3 phiên liên tục, giao dịch thỏa thuận quy mô lớn; chưa thấy insider sell đăng ký · Nguồn: simplize.vn/co-phieu/VJC; 24hmoney.vn VJC 5/6/2026</li>
+						</ul>
+					</li>
+					<li><strong>2. VND (HOSE) · 7/8</strong> <span class="badge badge-success">SETUP</span>
+						<ul class="sub-list">
+							<li>Khởi phát: Breakout khỏi nền tích lũy tháng 5 (15.842–16.182) lên 17.950 (03/06); pocket pivot 22/05 vol 47,1 tr cp = 2,7× TB20 (17,3 tr); catalyst: kỳ vọng MSCI upgrade tháng 6/2026</li>
+							<li>Giá 17.600 &gt; MA20 ~16.862 (tính từ 20 phiên); RS: +8,76% (1 tháng) vs VN-Index âm — RS dương rõ</li>
+							<li>Entry 16.900–17.200 (retest MA20 hoặc vùng break) · Stop 16.200 (dưới nền tích lũy tháng 5, −5,0%) · TP1 18.750 / TP2 19.500 · R:R 2,0:1 / 2,9:1</li>
+							<li>Smart money: E7 chưa xác minh rõ (điểm trừ 1); vol duy trì cao 2 tuần; chứng khoán SHS được ngoại gom trên HNX · Nguồn: simplize.vn/co-phieu/VND/lich-su-gia; nguoiquansat.vn MSCI VND 2026</li>
+						</ul>
+					</li>
+					<li><strong>3. VIC (HOSE) · 5/8</strong> <span class="badge badge-success">SETUP</span>
+						<ul class="sub-list">
+							<li>Khởi phát: Break kháng cự cũ ~189.300–195.000 lên 207.000 (+3,4% ngày 5/6); BĐS dẫn dắt nhóm ngành; khối ngoại mua ròng 272 tỷ ngày 5/6 (sau 11 phiên xả)</li>
+							<li>RS: +3,4% ngày 5/6 outperform; YTD +22,05%; 1 năm +322% — MA200 hướng lên mạnh</li>
+							<li>Entry 195.000–200.000 (retest, sau khi ngoại giảm bán; không đuổi giá trên 207.000) · Stop 186.000 (dưới vùng breakout 189.300, −5,8%) · TP1 220.000 / TP2 235.000 · R:R 1,9:1 / 3,3:1</li>
+							<li>Rủi ro: khối ngoại bán ròng VIC 4.820 tỷ cả tuần (chỉ đảo chiều 1 phiên); C5 volume chưa xác nhận. Xếp hạng thấp nhất trong 3 mã — size nhỏ · Nguồn: cafef.vn khối ngoại 5/6/2026; simplize.vn/co-phieu/VIC</li>
 						</ul>
 					</li>
 				</ul>
@@ -193,20 +206,23 @@
 			<section>
 				<h2>Nguyên tắc Hành động</h2>
 				<div class="alert-box" id="view-principle">
-					Regime Trung Tính: giữ 40–50% tiền mặt, chỉ vào lệnh khi có mã ≥5/8 VÀ R:R ≥ 2:1 rõ ràng. Không đuổi giá đã rời nền &gt;5–7%. Chờ VN-Index vượt và giữ được trên 1.843 với thanh khoản mở rộng trước khi tăng tỷ trọng. Đặt stoploss tuyệt đối trước khi vào lệnh — không thương lượng với rủi ro.
+					Regime TRUNG TÍNH: thanh khoản thấp dưới TB 20 phiên + breadth âm + ngoại bán ròng → chỉ vào lệnh tại vùng entry chuẩn (retest breakout), KHÔNG đuổi giá đã chạy &gt;5–7% khỏi nền.<br><br>
+					Giữ position size ở mức 30–50% danh mục; mỗi lệnh không quá 10–15% NAV. Tuân thủ stoploss tuyệt đối — nếu thị trường chung xấu thêm (VN-Index thủng 1.820), thoát ngay không chờ.<br><br>
+					Chờ pullback về vùng entry đề xuất (VJC 175–177k; VND 16,9–17,2k; VIC 195–200k) trước khi vào. Không bắt đầu sóng mới nếu VN-Index chưa hồi phục và thanh khoản chưa cải thiện rõ.
 				</div>
 			</section>
 			<section>
 				<h2>Danh sách Đã Loại (Tránh FOMO)</h2>
 				<ul class="info-list" id="view-eliminated">
-					<li><strong>FPT</strong> <span class="badge badge-danger">LOẠI</span> — R:R chỉ ~1.4:1, MA200 dốc xuống (giá -34% từ đỉnh 52w), chưa Stage-2</li>
-					<li><strong>STB</strong> <span class="badge badge-danger">LOẠI</span> — khối ngoại bán ròng, đã tăng 71% trong 52w, R:R ~1.4:1, đỉnh 76.800 vẫn là kháng cự mạnh</li>
-					<li><strong>PLX</strong> <span class="badge badge-danger">LOẠI</span> — tăng trần do tin bán cổ phiếu quỹ (không phải cấu trúc uptrend), nền &lt;3 tuần, lợi nhuận âm</li>
-					<li><strong>HPG</strong> <span class="badge badge-danger">LOẠI</span> — sideways, không có breakout nền; volume mạnh nhất (25/06/02) lại là ngày giá giảm (dấu hiệu distribution)</li>
-					<li><strong>GMD</strong> <span class="badge badge-danger">LOẠI</span> — thanh khoản mỏng (~415K–1.8M CP/phiên), nền chỉ 3 phiên (không đủ ≥3 tuần), chưa verify MA20/MA50</li>
-					<li><strong>MBB</strong> <span class="badge badge-danger">LOẠI</span> — YTD chỉ +1,19% (RS âm vs thị trường), sideways 5 phiên không có breakout, tín hiệu MA dài hạn là bán</li>
-					<li><strong>THD</strong> <span class="badge badge-danger">LOẠI</span> — tăng 12 phiên trần liên tiếp, đã "tăng nóng" &gt;30–40%, volume cạn dần, rủi ro đảo chiều cao</li>
-					<li><strong>AAN</strong> <span class="badge badge-danger">LOẠI</span> — cổ phiếu mới niêm yết, tăng +58% trong 1 tuần đầu, dấu hiệu bơm-xả, thanh khoản không ổn định</li>
+					<li><strong>THD</strong> <span class="badge badge-danger">LOẠI</span> — tăng nóng +400% trong 1 tháng (từ 32.000 lên ~147.800); đảo chiều giảm 18% trong 2 phiên; dấu hiệu bơm-xả; doanh nghiệp không có câu chuyện kinh doanh rõ ràng · Nguồn: viettimes.vn THD 2026</li>
+					<li><strong>KSF</strong> <span class="badge badge-danger">LOẠI</span> — giảm 26% trong 3 phiên sau tăng nóng; đảo chiều mạnh; rủi ro R:R âm · Nguồn: cafef.vn tuần 1-5/6/2026</li>
+					<li><strong>DST</strong> <span class="badge badge-danger">LOẠI</span> — doanh nghiệp "trắng doanh thu" nhiều quý, tăng trần 10 phiên liên tiếp (gấp đôi từ 4.500 lên 9.000); dấu hiệu bơm-xả rõ · Nguồn: cafef.vn DST 3/6/2026</li>
+					<li><strong>BSR</strong> <span class="badge badge-danger">LOẠI</span> — YTD +77%, đã tăng nóng; R:R xấu từ vùng hiện tại · Nguồn: simplize.vn/co-phieu/BSR</li>
+					<li><strong>C32</strong> <span class="badge badge-danger">LOẠI</span> — thanh khoản quá mỏng: vol TB10 = 21.480 cp/phiên (dưới ngưỡng 100.000 cp theo §5); không đủ điều kiện · Nguồn: simplize.vn/co-phieu/C32</li>
+					<li><strong>PEQ</strong> <span class="badge badge-danger">LOẠI</span> — niêm yết UPCOM (ngoài phạm vi quét HOSE+HNX); vol TB = 860 cp/phiên · Nguồn: simplize.vn/co-phieu/PEQ</li>
+					<li><strong>GAS</strong> <span class="badge badge-danger">LOẠI</span> — đạt 4/8, không có B3 hoặc B4 rõ (không xác nhận breakout nền tích lũy cụ thể trong cửa sổ 2 tuần) · Nguồn: simplize.vn/co-phieu/GAS</li>
+					<li><strong>VHM</strong> <span class="badge badge-danger">LOẠI</span> — 3/8: vol ngày 5/6 (3,71 tr) dưới TB20 (5,40 tr); 1 tháng chỉ +0,66%; ngoại bán ròng · Nguồn: simplize.vn/co-phieu/VHM; finance.vietstock.vn/VHM</li>
+					<li><strong>SHS</strong> <span class="badge badge-danger">LOẠI</span> — vol breakout 03/06 chỉ 1,32× TB10 (không đủ 1,5×); MA cấu trúc chưa xác nhận đủ tiêu chí · Nguồn: simplize.vn/co-phieu/SHS</li>
 				</ul>
 			</section>
 		</div>
@@ -214,9 +230,9 @@
 
 	<!-- FOOTER -->
 	<div class="source-footer">
-		Nguồn tham chiếu: vietstock.vn, cafef.vn, 24hmoney.vn, simplize.vn, vneconomy.vn, tinnhanhchungkhoan.vn, nguoiquansat.vn, baomoi.com<br>
-		Quét: 18 candidate / Verify: 8 / Đạt tiêu chí ≥5/8: 1 (FPT) / Đạt R:R ≥2:1: 0<br>
-		Báo cáo tự động — không phải khuyến nghị đầu tư. Set Entry/Stop/TP theo bảng giá live.
+		Nguồn tham chiếu dữ liệu: simplize.vn · cafef.vn · vietstock.vn · 24hmoney.vn · nguoiquansat.vn · tinnhanhchungkhoan.vn · baomoi.com · vietbao.vn<br>
+		Quét: 25 candidate xét · 10 verify sâu · 3 mã pass. Cửa sổ dữ liệu: 23/05–05/06/2026. 06/06/2026 chưa có dữ liệu đóng cửa tại thời điểm phát hành báo cáo.<br>
+		Set Entry/Stop/TP theo bảng giá live, R:R &ge; 2:1. Báo cáo tự động — không phải khuyến nghị đầu tư.
 	</div>
 
 </div>
