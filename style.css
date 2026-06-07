@@ -15,28 +15,16 @@ body {
     background-color: var(--bg-color);
     color: var(--text-main);
     line-height: 1.5;
-    padding: 20px;
     -webkit-font-smoothing: antialiased;
 }
 .container {
     max-width: 1100px;
-    margin: 0 auto;
+    margin: 0 auto 20px;
     background: var(--container-bg);
     padding: 24px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
-.header {
-    border-bottom: 2px solid var(--text-main);
-    padding-bottom: 12px;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-.header h1 { font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-.header .subtitle { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
-.header .date { font-size: 13px; color: var(--text-muted); font-weight: 500; }
 section { margin-bottom: 24px; }
 h2 {
     font-size: 14px;
@@ -92,32 +80,14 @@ td.error { color: var(--danger-color); }
 .badge-muted   { background-color: #e9ecef; color: var(--text-muted); }
 
 /* ===== VIEWER ===== */
-.viewer-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-}
-.viewer-header h2 { flex: 1; margin-bottom: 12px; }
-.viewer-actions { display: flex; gap: 12px; align-items: center; margin-bottom: 8px; }
-.viewer-actions a { font-size: 13px; color: #0d6efd; text-decoration: none; }
-.viewer-actions a:hover { text-decoration: underline; }
-.viewer-actions button {
-    font-size: 13px;
-    padding: 4px 10px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    background: #fff;
-    color: var(--text-main);
-    cursor: pointer;
-}
-.viewer-actions button:hover { background: #f8f9fa; }
+/* Full-bleed: không margin/padding, liền mạch với nền page */
 #viewer-frame {
+    display: block;
     width: 100%;
     height: 1200px;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    background: var(--bg-color);
+    border: none;
+    background: transparent;
+    margin: 0;
 }
 
 /* ===== FOOTER ===== */
@@ -133,10 +103,7 @@ td.error { color: var(--danger-color); }
 
 /* ===== MOBILE ===== */
 @media (max-width: 768px) {
-    body { padding: 10px; }
-    .container { padding: 16px; }
-    .header { flex-direction: column; align-items: flex-start; gap: 4px; padding-bottom: 10px; }
-    .header h1 { font-size: 17px; }
+    .container { padding: 16px; margin: 0 10px 10px; }
     thead th, tbody td { padding: 8px; font-size: 13px; }
     #viewer-frame { height: 1600px; }
 }

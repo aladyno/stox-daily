@@ -3,7 +3,8 @@
  * - Lấy danh sách báo cáo trong folder data/ qua GitHub API (tự cập nhật khi có file mới),
  *   fallback sang data/manifest.json nếu API lỗi / rate-limit.
  * - Đọc từng file báo cáo để trích metadata (regime, kết quả quét, tỷ trọng, độ rộng) hiển thị lên bảng.
- * - Bấm 1 row → load báo cáo đầy đủ vào iframe viewer bên dưới (deep-link bằng #hash).
+ * - Viewer nằm trên cùng, luôn tự load báo cáo ngày mới nhất khi mở trang.
+ * - Bấm 1 row trong bảng → viewer đổi sang báo cáo của ngày đó (deep-link bằng #hash).
  */
 (function () {
     'use strict';
@@ -12,12 +13,7 @@
     var FILE_PATTERN = /^uptrend-scan-(\d{4}-\d{2}-\d{2})\.html$/;
 
     var tbody = document.getElementById('report-tbody');
-    var viewerSection = document.getElementById('viewer-section');
-    var viewerTitle = document.getElementById('viewer-title');
     var viewerFrame = document.getElementById('viewer-frame');
-    var viewerOpenTab = document.getElementById('viewer-open-tab');
-    var viewerClose = document.getElementById('viewer-close');
-    var lastUpdated = document.getElementById('last-updated');
 
     /* ---------- Lấy danh sách file ---------- */
 
@@ -123,7 +119,7 @@
             tr.appendChild(td);
         }
 
-        tr.addEventListener('click', function () { openReport(tr); });
+        tr.addEventListener('click', function () { openReport(tr, true); });
         return tr;
     }
 
@@ -148,7 +144,22 @@
 
     /* ---------- Viewer ---------- */
 
-    function openReport(tr) {
+    // Báo cáo gốc có khung riêng (nền xám + container trắng đổ bóng).
+    // Inject CSS để bỏ khung, nội dung liền mạch với trang index.
+    viewerFrame.addEventListener('load', function () {
+        try {
+            var doc = viewerFrame.contentDocument;
+            if (!doc || !doc.head) return;
+            var style = doc.createElement('style');
+            style.textContent =
+                'body{background:transparent !important;padding:20px !important}' +
+                '.container{max-width:none !important;background:transparent !important;' +
+                'padding:0 !important;border-radius:0 !important;box-shadow:none !important}';
+            doc.head.appendChild(style);
+        } catch (e) { /* khác origin thì bỏ qua */ }
+    });
+
+    function openReport(tr, scrollToViewer) {
         var file = tr.dataset.file;
         var date = tr.dataset.date;
 
@@ -156,24 +167,13 @@
         for (var i = 0; i < rows.length; i++) rows[i].classList.remove('active');
         tr.classList.add('active');
 
-        viewerTitle.textContent = 'Báo cáo ngày ' + formatDate(date);
         viewerFrame.src = 'data/' + file;
-        viewerOpenTab.href = 'data/' + file;
-        viewerSection.hidden = false;
 
         if (history.replaceState) history.replaceState(null, '', '#' + date);
-        viewerSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (scrollToViewer) {
+            viewerFrame.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     }
-
-    function closeViewer() {
-        viewerSection.hidden = true;
-        viewerFrame.src = 'about:blank';
-        var active = tbody.querySelector('tr.active');
-        if (active) active.classList.remove('active');
-        if (history.replaceState) history.replaceState(null, '', location.pathname + location.search);
-    }
-
-    viewerClose.addEventListener('click', closeViewer);
 
     /* ---------- Khởi tạo ---------- */
 
@@ -189,7 +189,6 @@
             }
 
             var latestDate = files[0].match(FILE_PATTERN)[1];
-            lastUpdated.textContent = 'Báo cáo mới nhất: ' + formatDate(latestDate);
 
             files.forEach(function (file) {
                 var date = file.match(FILE_PATTERN)[1];
@@ -198,12 +197,15 @@
                 fetchMeta(file).then(function (meta) { fillRowMeta(tr, meta); });
             });
 
-            // Deep-link: index.html#2026-06-05 → tự mở báo cáo đó
+            // Deep-link: index.html#2026-06-05 → mở báo cáo đó;
+            // mặc định luôn hiện báo cáo ngày mới nhất.
             var hash = location.hash.replace('#', '');
+            var target = null;
             if (/^\d{4}-\d{2}-\d{2}$/.test(hash)) {
-                var target = tbody.querySelector('tr[data-date="' + hash + '"]');
-                if (target) openReport(target);
+                target = tbody.querySelector('tr[data-date="' + hash + '"]');
             }
+            if (!target) target = tbody.querySelector('tr[data-date="' + latestDate + '"]');
+            if (target) openReport(target, false);
         })
         .catch(function (err) {
             tbody.textContent = '';

@@ -8,16 +8,12 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="container">
 
-	<!-- HEADER -->
-	<div class="header">
-		<div>
-			<h1>STOX DAILY · UPTREND SCAN</h1>
-			<div class="subtitle">HOSE + HNX · Báo cáo quét tự động hằng ngày</div>
-		</div>
-		<div class="date" id="last-updated"></div>
-	</div>
+<!-- VIEWER: full-bleed, liền mạch với page — luôn hiện báo cáo mới nhất, bấm row trong bảng để đổi ngày -->
+<!-- Header hiển thị là header của chính báo cáo (UPTREND SCAN · HOSE+HNX) trong iframe -->
+<iframe id="viewer-frame" title="Báo cáo uptrend scan"></iframe>
+
+<div class="container">
 
 	<!-- BẢNG DANH SÁCH BÁO CÁO -->
 	<section>
@@ -38,18 +34,6 @@
 				</tbody>
 			</table>
 		</div>
-	</section>
-
-	<!-- VIEWER: bấm row sẽ load báo cáo vào đây -->
-	<section id="viewer-section" hidden>
-		<div class="viewer-header">
-			<h2 id="viewer-title">Báo cáo</h2>
-			<div class="viewer-actions">
-				<a id="viewer-open-tab" href="#" target="_blank" rel="noopener">Mở tab mới ↗</a>
-				<button id="viewer-close" type="button">✕ Đóng</button>
-			</div>
-		</div>
-		<iframe id="viewer-frame" title="Báo cáo uptrend scan"></iframe>
 	</section>
 
 	<!-- FOOTER -->
